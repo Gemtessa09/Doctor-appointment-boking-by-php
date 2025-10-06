@@ -4,11 +4,11 @@ The Doctor's Appointment System is designed to streamline the process of schedul
 <br>
 Features <br>
 User Roles:
-The system includes three user roles:<br>
+=>The system includes three user roles:<br>
 
-Administrator: Manages the list of doctors, their specialties, and credentials.
-Doctor: Views and manages appointment schedules and patient requests.
-Patient: Browses available doctors and submits appointment requests.
+1.Administrator: Manages the list of doctors, their specialties, and credentials.<br>
+2.Doctor: Views and manages appointment schedules and patient requests.
+3.Patient: Browses available doctors and submits appointment requests.<br>
 Appointment Management:
 Patients can search for doctors based on their medical needs.
 A weekly schedule display allows patients to select convenient appointment times.
