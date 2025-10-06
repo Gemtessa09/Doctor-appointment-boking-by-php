@@ -1,4 +1,4 @@
-Doctor's Appointment System
+<b>Doctor's Appointment System<b> <br>
 Overview
 The Doctor's Appointment System is designed to streamline the process of scheduling medical appointments online. This application allows patients to request appointments with doctors, while enabling doctors to manage their schedules effectively.
 
