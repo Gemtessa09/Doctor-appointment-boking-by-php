@@ -1,10 +1,10 @@
 <b>Doctor's Appointment System<b> <br>
-Overview
+Overview <br>
 The Doctor's Appointment System is designed to streamline the process of scheduling medical appointments online. This application allows patients to request appointments with doctors, while enabling doctors to manage their schedules effectively.
-
-Features
+<br>
+Features <br>
 User Roles:
-The system includes three user roles:
+The system includes three user roles:<br>
 
 Administrator: Manages the list of doctors, their specialties, and credentials.
 Doctor: Views and manages appointment schedules and patient requests.
