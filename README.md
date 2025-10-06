@@ -1,16 +1,15 @@
-
-#Doctor's Appointment System
-#Overview
+Doctor's Appointment System
+Overview
 The Doctor's Appointment System is designed to streamline the process of scheduling medical appointments online. This application allows patients to request appointments with doctors, while enabling doctors to manage their schedules effectively.
 
-#Features
-User Roles: The system includes three user roles:
+Features
+User Roles:
+The system includes three user roles:
 
 Administrator: Manages the list of doctors, their specialties, and credentials.
 Doctor: Views and manages appointment schedules and patient requests.
 Patient: Browses available doctors and submits appointment requests.
 Appointment Management:
-
 Patients can search for doctors based on their medical needs.
 A weekly schedule display allows patients to select convenient appointment times.
 Doctors can view all their appointments and patient requests to confirm availability.
@@ -96,4 +95,4 @@ PHP Version: 7.3.5
 Server Software: Apache/2.4.39 (Win64) PHP/7.3.5
 
 MySQL Version: 5.7.26
-# Doctor-appointment-boking-by-php
+
