@@ -1,3 +1,73 @@
+<?php
+// Must be at the very top
+session_start();
+
+// Initialize session variables
+$_SESSION["user"] = "";
+$_SESSION["usertype"] = "";
+
+// Set timezone
+date_default_timezone_set('Asia/Kolkata');
+$_SESSION["date"] = date('Y-m-d');
+
+// Include database connection
+include("connection.php"); // Make sure connection.php creates $database as mysqli object
+
+// Initialize error message
+$error = "";
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $email = $_POST['useremail'];
+    $password = $_POST['userpassword'];
+
+    // Check if email exists
+    $result = $database->query("SELECT * FROM webuser WHERE email='$email'");
+    
+    if ($result && $result->num_rows == 1) {
+        $utype = $result->fetch_assoc()['usertype'];
+
+        if ($utype == 'p') {
+            $checker = $database->query("SELECT * FROM patient WHERE pemail='$email' AND ppassword='$password'");
+            if ($checker && $checker->num_rows == 1) {
+                $_SESSION['user'] = $email;
+                $_SESSION['usertype'] = 'p';
+                header('Location: patient/index.php');
+                exit();
+            } else {
+                $error = "Wrong credentials: Invalid email or password";
+            }
+
+        } elseif ($utype == 'a') {
+            $checker = $database->query("SELECT * FROM admin WHERE aemail='$email' AND apassword='$password'");
+            if ($checker && $checker->num_rows == 1) {
+                $_SESSION['user'] = $email;
+                $_SESSION['usertype'] = 'a';
+                header('Location: admin/index.php');
+                exit();
+            } else {
+                $error = "Wrong credentials: Invalid email or password";
+            }
+
+        } elseif ($utype == 'd') {
+            $checker = $database->query("SELECT * FROM doctor WHERE docemail='$email' AND docpassword='$password'");
+            if ($checker && $checker->num_rows == 1) {
+                $_SESSION['user'] = $email;
+                $_SESSION['usertype'] = 'd';
+                header('Location: doctor/index.php');
+                exit();
+            } else {
+                $error = "Wrong credentials: Invalid email or password";
+            }
+        }
+
+    } else {
+        $error = "No account found for this email";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,180 +77,53 @@
     <link rel="stylesheet" href="css/animations.css">  
     <link rel="stylesheet" href="css/main.css">  
     <link rel="stylesheet" href="css/login.css">
-        
     <title>Login</title>
-
-    
-    
 </head>
 <body>
-    <?php
-
-    //learn from w3schools.com
-    //Unset all the server side variables
-
-    session_start();
-
-    $_SESSION["user"]="";
-    $_SESSION["usertype"]="";
-    
-    // Set the new timezone
-    date_default_timezone_set('Asia/Kolkata');
-    $date = date('Y-m-d');
-
-    $_SESSION["date"]=$date;
-    
-
-    //import database
-    include("connection.php");
-
-    
-
-
-
-    if($_POST){
-
-        $email=$_POST['useremail'];
-        $password=$_POST['userpassword'];
-        
-        $error='<label for="promter" class="form-label"></label>';
-
-        $result= $database->query("select * from webuser where email='$email'");
-        if($result->num_rows==1){
-            $utype=$result->fetch_assoc()['usertype'];
-            if ($utype=='p'){
-                $checker = $database->query("select * from patient where pemail='$email' and ppassword='$password'");
-                if ($checker->num_rows==1){
-
-
-                    //   Patient dashbord
-                    $_SESSION['user']=$email;
-                    $_SESSION['usertype']='p';
-                    
-                    header('location: patient/index.php');
-
-                }else{
-                    $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
-                }
-
-            }elseif($utype=='a'){
-                $checker = $database->query("select * from admin where aemail='$email' and apassword='$password'");
-                if ($checker->num_rows==1){
-
-
-                    //   Admin dashbord
-                    $_SESSION['user']=$email;
-                    $_SESSION['usertype']='a';
-                    
-                    header('location: admin/index.php');
-
-                }else{
-                    $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
-                }
-
-
-            }elseif($utype=='d'){
-                $checker = $database->query("select * from doctor where docemail='$email' and docpassword='$password'");
-                if ($checker->num_rows==1){
-
-
-                    //   doctor dashbord
-                    $_SESSION['user']=$email;
-                    $_SESSION['usertype']='d';
-                    header('location: doctor/index.php');
-
-                }else{
-                    $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
-                }
-
-            }
-            
-        }else{
-            $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">We cant found any acount for this email.</label>';
-        }
-
-
-
-
-
-
-        
-    }else{
-        $error='<label for="promter" class="form-label">&nbsp;</label>';
-    }
-
-    ?>
-
-
-
-
-
     <center>
     <div class="container">
-        <table border="0" style="margin: 0;padding: 0;width: 60%;">
+        <table border="0" style="width: 60%;">
             <tr>
-                <td>
-                    <p class="header-text">Welcome Back!</p>
-                </td>
-            </tr>
-        <div class="form-body">
-            <tr>
-                <td>
-                    <p class="sub-text">Login with your details to continue</p>
-                </td>
+                <td><p class="header-text">Welcome Back!</p></td>
             </tr>
             <tr>
-                <form action="" method="POST" >
-                <td class="label-td">
-                    <label for="useremail" class="form-label">Email: </label>
-                </td>
+                <td><p class="sub-text">Login with your details to continue</p></td>
             </tr>
             <tr>
-                <td class="label-td">
-                    <input type="email" name="useremail" class="input-text" placeholder="Email Address" required>
-                </td>
+                <form action="" method="POST">
+                    <td class="label-td">
+                        <label for="useremail" class="form-label">Email: </label>
+                        <input type="email" name="useremail" class="input-text" placeholder="Email Address" required>
+                    </td>
             </tr>
             <tr>
                 <td class="label-td">
                     <label for="userpassword" class="form-label">Password: </label>
+                    <input type="password" name="userpassword" class="input-text" placeholder="Password" required>
                 </td>
             </tr>
-
             <tr>
-                <td class="label-td">
-                    <input type="Password" name="userpassword" class="input-text" placeholder="Password" required>
+                <td>
+                    <br>
+                    <label style="color:red;text-align:center;"><?php echo $error; ?></label>
                 </td>
             </tr>
-
-
-            <tr>
-                <td><br>
-                <?php echo $error ?>
-                </td>
-            </tr>
-
             <tr>
                 <td>
                     <input type="submit" value="Login" class="login-btn btn-primary btn">
                 </td>
             </tr>
-        </div>
             <tr>
                 <td>
                     <br>
-                    <label for="" class="sub-text" style="font-weight: 280;">Don't have an account&#63; </label>
+                    <label class="sub-text">Don't have an account? </label>
                     <a href="signup.php" class="hover-link1 non-style-link">Sign Up</a>
                     <br><br><br>
                 </td>
             </tr>
-                        
-                        
-    
-                        
-                    </form>
+                </form>
         </table>
-
     </div>
-</center>
+    </center>
 </body>
 </html>
