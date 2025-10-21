@@ -2,6 +2,7 @@
 Overview <br>
 The Doctor's Appointment System is designed to streamline the process of scheduling medical appointments online. This application allows patients to request appointments with doctors, while enabling doctors to manage their schedules effectively.
 <br>
+
 Features <br>
 User Roles:
 =>The system includes three user roles:<br>
@@ -48,6 +49,8 @@ Doctors can view all their appointments and patient requests to confirm availabi
 
     edit account settings;
 
+    
+
 If you are Admin,doctor or patient ,only have one page to login :)
 
 ---
@@ -84,6 +87,7 @@ PATIENT EMAIL: patient@edoc.com
 
 PATIENT PASSWORD: 123
 
+
 ---
 
 # The Project was developed using the following:
@@ -95,4 +99,9 @@ PHP Version: 7.3.5
 Server Software: Apache/2.4.39 (Win64) PHP/7.3.5
 
 MySQL Version: 5.7.26
+
+
+
+
+
 
